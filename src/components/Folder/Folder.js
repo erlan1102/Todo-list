@@ -2,8 +2,9 @@ import React,{useState} from 'react';
 import Title from "./Title";
 import List from "./List";
 import Form from "./Form";
+import { v4 as uuidv4 } from 'uuid';
 
-const Folder = ({setAll, all, status}) => {
+const Folder = ({setStatus, setAll, all, status}) => {
 
     const [task,setTask] = useState('');
     const [addTask, setAddTask] = useState(false);
@@ -15,7 +16,7 @@ const Folder = ({setAll, all, status}) => {
                 return {...item, tasks: [...item.tasks, {
                         name: task,
                         done: false,
-                        id: item.tasks.length + 1,
+                        id: uuidv4(),
                         change: false
                     }]}
             } else {
@@ -29,7 +30,7 @@ const Folder = ({setAll, all, status}) => {
         <>
             {all.filter((item)=> item.folder === status).map((item)=>(
                 <div className='folder' key={item.id}>
-                    <Title item={item}/>
+                    <Title setStatus={setStatus} all={all} setAll={setAll} item={item}/>
                     <List item={item} setAll={setAll} all={all}/>
                     <Form setAddTask={setAddTask}
                           addTask={addTask}

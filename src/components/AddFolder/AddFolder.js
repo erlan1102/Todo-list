@@ -1,6 +1,11 @@
-import React from 'react';
+import React,{useState} from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 const AddFolder = ({all, setAll, folder, setFolder, addFolder, setAddFolder}) => {
+    let colors = ['blue','red','green','yellow','orange','purple'];
+
+    const [active, setActive] = useState(0);
+
     const addFolderInAll = (e) => {
         e.preventDefault();
         if (all.map((item)=> item.folder).includes(folder)){
@@ -8,9 +13,10 @@ const AddFolder = ({all, setAll, folder, setFolder, addFolder, setAddFolder}) =>
         } else {
             setAll([...all, {
                 folder: folder,
-                id: all.length + 1,
+                id: uuidv4(),
                 tasks: [],
-                change: false
+                change: false,
+                color: colors[active]
             }]);
             setFolder('')
         }
@@ -22,8 +28,16 @@ const AddFolder = ({all, setAll, folder, setFolder, addFolder, setAddFolder}) =>
             <div style={{display:`${addFolder ? 'block' : 'none'}`}} className='sidebar__add-form'>
                 <form onSubmit={addFolderInAll} action="">
                     <input maxLength={15} required value={folder} className='sidebar__add-form-input' type="text" placeholder='Название папки' onChange={(e)=> setFolder(e.target.value)}/>
+                    <ul className='sidebar__add-form-colors'>
+                        {colors.map((item,idx)=> (
+                            <li style={{backgroundColor: item}} key={item}
+                                className={`sidebar__add-form-circle ${idx === active ? 'active' : ''}`}
+                                onClick={()=> setActive(idx)}> </li>
+                        ))}
+                    </ul>
                     <button className='sidebar__add-form-btn' type='submit'>Добавить</button>
                 </form>
+
                 <button className='sidebar__add-form-close' onClick={()=> {
                     setAddFolder(false);
                     setFolder('')
