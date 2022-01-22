@@ -27,7 +27,7 @@ const AddFolder = ({all, setAll, folder, setFolder, addFolder, setAddFolder}) =>
             <button type='button' className='sidebar__add-btn' onClick={()=> setAddFolder(true)}> <span>+</span> Добавить папку</button>
             <div style={{display:`${addFolder ? 'block' : 'none'}`}} className='sidebar__add-form'>
                 <form onSubmit={addFolderInAll} action="">
-                    <input maxLength={15} required value={folder} className='sidebar__add-form-input' type="text" placeholder='Название папки' onChange={(e)=> setFolder(e.target.value)}/>
+                    <input maxLength={18} required value={folder} className='sidebar__add-form-input' type="text" placeholder='Название папки' onChange={(e)=> setFolder(e.target.value)}/>
                     <ul className='sidebar__add-form-colors'>
                         {colors.map((item,idx)=> (
                             <li style={{backgroundColor: item}} key={item}
